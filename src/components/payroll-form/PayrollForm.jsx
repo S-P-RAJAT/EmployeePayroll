@@ -22,7 +22,7 @@ const PayrollForm = (props) => {
         allDepartment: [
             'HR', 'Sales', 'Finance', 'Engineer', 'Others'
         ],
-        departMentValue: [],
+        departmentValue: [],
         gender: '',
         salary: '',
         day: '1',
@@ -43,7 +43,7 @@ const PayrollForm = (props) => {
         }
     }
     const [formValue, setForm] = useState(initialValue);
-
+    const [displayMessage, setDisplayMessage ] = useState("hello");
     const employeeService = new EmployeeService();
 
     let _ = require('lodash');
@@ -54,17 +54,17 @@ const PayrollForm = (props) => {
     }
 
     const onCheckChange = (name) => {
-        let index = formValue.departMentValue.indexOf(name);
+        let index = formValue.departmentValue.indexOf(name);
 
-        let checkArray = [...formValue.departMentValue]
+        let checkArray = [...formValue.departmentValue]
         if (index > -1)
             checkArray.splice(index, 1)
         else
             checkArray.push(name);
-        setForm({ ...formValue, departMentValue: checkArray });
+        setForm({ ...formValue, departmentValue: checkArray });
     }
     const getChecked = (name) => {
-        return formValue.departMentValue && formValue.departMentValue.includes(name);
+        return formValue.departmentValue && formValue.departmentValue.includes(name);
     }
 
     const handleValidations = async () => {
@@ -95,7 +95,7 @@ const PayrollForm = (props) => {
             isError = true;
         }
 
-        if (formValue.departMentValue.length < 1) {
+        if (formValue.departmentValue.length < 1) {
             error.department = 'Department is a required field'
             isError = true;
         }
@@ -125,7 +125,7 @@ const PayrollForm = (props) => {
         } else{
             let object = {
                 name: formValue.name,
-                departMent: formValue.departMentValue,
+                department: formValue.departmentValue,
                 gender: formValue.gender,
                 salary: formValue.salary,
                 startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
@@ -136,12 +136,12 @@ const PayrollForm = (props) => {
               console.log("id"+formValue.id);
               employeeService.addEmployee(object)
                 .then((data) => {
-                  alert("data added successfully");
-                  props.history.push("");
-                  window.location.reload();
+                  console.log("data added successfully");
+                  setDisplayMessage("data added successfully");
                 })
                 .catch((err) => {
-                  alert("error while Adding data");
+                  console.log("error while Adding data");
+                  setDisplayMessage("error while Adding data");
                 });
     }
 }
@@ -299,7 +299,9 @@ const PayrollForm = (props) => {
                             <button type="submit" className="button submitButton" id="submitButton">{formValue.isUpdate ? 'Update' : 'Submit'}</button>
                             <button type="button" onClick={reset} className="resetButton button">Reset</button>
                         </div>
+                        
                     </div >
+                        {displayMessage}
                 </form >
             </div >
         </div >

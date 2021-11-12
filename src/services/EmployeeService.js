@@ -1,5 +1,5 @@
 import config from "../config/config";
-import AxiosService from "./AxiosService.js";
+import AxiosService from "./AxiosService";
 
 export default class EmployeeService {
   baseUrl = config.baseUrl;

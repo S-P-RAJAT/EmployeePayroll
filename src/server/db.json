@@ -60,6 +60,32 @@
       "notes": "Good Employee",
       "id": "34",
       "profileUrl": "../../assets/profile-images/Ellipse -1.png"
+    },
+    {
+      "name": "Fasso",
+      "department": [
+        "Sales",
+        "Finance"
+      ],
+      "gender": "female",
+      "salary": "450000",
+      "startDate": "1 Jan 2020",
+      "notes": "sd",
+      "id": "52",
+      "profileUrl": "../../assets/profile-images/Ellipse -3.png"
+    },
+    {
+      "name": "Fasso",
+      "department": [
+        "Sales",
+        "Finance"
+      ],
+      "gender": "female",
+      "salary": "400001",
+      "startDate": "1 Jan 2020",
+      "notes": "dd",
+      "id": "20",
+      "profileUrl": "../../assets/profile-images/Ellipse -3.png"
     }
   ]
 }
