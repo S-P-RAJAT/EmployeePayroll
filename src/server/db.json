@@ -1,54 +1,6 @@
 {
   "employee": [
     {
-      "name": "mohit kumar new",
-      "gender": "male",
-      "department": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
-      "notes": "",
-      "id": 1604589551457,
-      "profileUrl": "Ellipse 1.png"
-    },
-    {
-      "name": "mohit kumar test",
-      "gender": "male",
-      "department": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
-      "notes": "",
-      "id": 1604589594363,
-      "profileUrl": "Ellipse 1.png"
-    },
-    {
-      "name": "mohit",
-      "gender": "male",
-      "department": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
-      "notes": "",
-      "id": 1604589699566,
-      "profileUrl": "Ellipse -3.png"
-    },
-    {
-      "name": "test",
-      "gender": "male",
-      "department": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
-      "notes": "",
-      "id": 1604589731061,
-      "profileUrl": "Ellipse -3.png"
-    },
-    {
       "name": "Rahul",
       "department": [
         "Sales",
@@ -62,12 +14,12 @@
       "profileUrl": "Ellipse -3.png"
     },
     {
-      "name": "Fasso",
+      "name": "Hemanth Kumar",
       "department": [
         "Sales",
         "Finance"
       ],
-      "gender": "female",
+      "gender": "male",
       "salary": "450000",
       "startDate": "1 Jan 2020",
       "notes": "sd",
@@ -75,7 +27,7 @@
       "profileUrl": "Ellipse -3.png"
     },
     {
-      "name": "Fasso",
+      "name": "Anjali Verma",
       "department": [
         "Sales",
         "Finance"
@@ -85,7 +37,7 @@
       "startDate": "1 Jan 2020",
       "notes": "dd",
       "id": "20",
-      "profileUrl": "Ellipse -3.png"
+      "profileUrl": "Ellipse -1.png"
     }
   ]
 }

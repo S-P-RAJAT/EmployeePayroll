@@ -18,4 +18,8 @@ export default class EmployeeService {
   updateEmployee(data) {
     return AxiosService.putService(`${this.baseUrl}employee/${data.id}`, data);
   }
+
+  deleteEmployee(id) {
+    return AxiosService.deleteService(`${this.baseUrl}employee/${id}`);
+  }
 }
