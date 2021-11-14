@@ -16,7 +16,7 @@ export default class Home extends React.Component {
     };
     this.employeeService = new EmployeeService();
   }
-  
+
   openSearch = () => {
     this.setState({ searchExpand: true });
   };
@@ -27,11 +27,11 @@ export default class Home extends React.Component {
   getAllEmployee = () => {
     this.employeeService
       .getAllEmployee()
-      .then((data) => {
-        console.log("data after get ", data.data);
+      .then((response) => {
+        console.log("data after get ", response.data.data);
         this.setState({
-          employeeArray: data.data,
-          AllEmployeeArray: data.data,
+          employeeArray: response.data.data,
+          AllEmployeeArray: response.data.data,
         });
       })
       .catch((err) => {
@@ -56,35 +56,35 @@ export default class Home extends React.Component {
     return (
       <div>
         <header className='header row center'>
-                <div className="logo">
-                    <img src={logo} alt="" />
-                    <div>
-                        <span className="emp-text">EMPLOYEE</span> <br />
-                        <span className="emp-text emp-payroll">PAYROLL</span>
-                    </div>
-                </div>
-            </header>
+          <div className="logo">
+            <img src={logo} alt="" />
+            <div>
+              <span className="emp-text">EMPLOYEE</span> <br />
+              <span className="emp-text emp-payroll">PAYROLL</span>
+            </div>
+          </div>
+        </header>
         <div className="column content">
-        <div className="emp-detail">
+          <div className="emp-detail">
             <div className="detail-text">
               Employee Details <div className="count"></div>
             </div>
 
-              <div className="search-box" onClick={this.openSearch}>
-                <input
-                  className={
-                    "input " + (this.state.searchExpand && "input-expand")
-                  }
-                  onChange={this.search}
-                  type="text"
-                  placeholder=""
-                />
-                <img className="search-icon" src={searchIcon} alt="" />
-              </div>
-              <Link to="payroll-form" className="add-button" >
-                <img src={addIcon} alt="" /> Add User
-              </Link>
-              </div>
+            <div className="search-box" onClick={this.openSearch}>
+              <input
+                className={
+                  "input " + (this.state.searchExpand && "input-expand")
+                }
+                onChange={this.search}
+                type="text"
+                placeholder=""
+              />
+              <img className="search-icon" src={searchIcon} alt="" />
+            </div>
+            <Link to="payroll-form" className="add-button" >
+              <img src={addIcon} alt="" /> Add User
+            </Link>
+          </div>
           <div className="table-main">
             <Display
               employeeArray={this.state.employeeArray}

@@ -18,7 +18,7 @@ const PayrollForm = (props) => {
         allDepartment: [
             'HR', 'Sales', 'Finance', 'Engineer', 'Others'
         ],
-        department: [],
+        departments: [],
         gender: '',
         salary: '',
         day: '1',
@@ -26,15 +26,15 @@ const PayrollForm = (props) => {
         year: '2020',
         startDate: '',
         notes: '',
-        id: '',
-        profileUrl: '',
+        employeeId: '',
+        profilePic: '',
         isUpdate: false,
         error: {
-            department: '',
+            departments: '',
             name: '',
             gender: '',
             salary: '',
-            profileUrl: '',
+            profilePic: '',
             startDate: ''
         }
     }
@@ -45,8 +45,8 @@ const PayrollForm = (props) => {
     const params = useParams();
 
     useEffect(() => {
-        if (params.id) {
-            getDataById(params.id);
+        if (params.employeeId) {
+            getDataById(params.employeeId);
         }
     }, []);
 
@@ -64,11 +64,11 @@ const PayrollForm = (props) => {
     };
 
     const setData = (obj) => {
-        let array = obj.startDate.split(" ");
+        let array = obj.startDate.split("-");
         setForm({
             ...formValue,
             ...obj,
-            department: obj.department,
+            departments: obj.departments,
             isUpdate: true,
             day: array[0],
             month: array[1],
@@ -81,27 +81,27 @@ const PayrollForm = (props) => {
     }
 
     const onCheckChange = (name) => {
-        let index = formValue.department.indexOf(name);
+        let index = formValue.departments.indexOf(name);
 
-        let checkArray = [...formValue.department]
+        let checkArray = [...formValue.departments]
         if (index > -1)
             checkArray.splice(index, 1)
         else
             checkArray.push(name);
-        setForm({ ...formValue, department: checkArray });
+        setForm({ ...formValue, departments: checkArray });
     }
     const getChecked = (name) => {
-        return formValue.department && formValue.department.includes(name);
+        return formValue.departments && formValue.departments.includes(name);
     }
 
     const handleValidations = async () => {
         let isError = false;
         let error = {
-            department: '',
+            departments: '',
             name: '',
             gender: '',
             salary: '',
-            profileUrl: '',
+            profilePic: '',
             startDate: ''
         }
         if (!formValue.name.match('^[A-Z]{1}[a-zA-Z]{2,}')) {
@@ -117,13 +117,13 @@ const PayrollForm = (props) => {
             error.salary = 'Salary should be between 4,00,000 and 5,00,000!!'
             isError = true;
         }
-        if (formValue.profileUrl.length < 1) {
-            error.profileUrl = 'Profile is a required field'
+        if (formValue.profilePic.length < 1) {
+            error.profilePic = 'Profile is a required field'
             isError = true;
         }
 
-        if (formValue.department.length < 1) {
-            error.department = 'Department is a required field'
+        if (formValue.departments.length < 1) {
+            error.departments = 'Department is a required field'
             isError = true;
         }
         var day = formValue.day.valueOf();
@@ -152,15 +152,15 @@ const PayrollForm = (props) => {
         } else {
             let object = {
                 name: formValue.name,
-                department: formValue.department,
+                departments: formValue.departments,
                 gender: formValue.gender,
                 salary: formValue.salary,
                 startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
                 notes: formValue.notes,
-                id: formValue.id,
-                profileUrl: formValue.profileUrl,
+                employeeId: formValue.employeeId,
+                profilePic: formValue.profilePic,
             };
-            console.log("id" + formValue.id);
+            console.log("id" + formValue.employeeId);
             if (formValue.isUpdate) {
                 employeeService
                     .updateEmployee(object)
@@ -190,7 +190,7 @@ const PayrollForm = (props) => {
     }
 
     const reset = () => {
-        setForm({ ...initialValue, id: formValue.id, isUpdate: formValue.isUpdate });
+        setForm({ ...initialValue, employeeId: formValue.employeeId, isUpdate: formValue.isUpdate });
 
         console.log(formValue);
     }
@@ -214,27 +214,27 @@ const PayrollForm = (props) => {
                         <error className="error">{formValue.error.name}</error>
                     </div>
                     <div className="row">
-                        <label className="label text" htmlFor="profileUrl">Profile image</label>
+                        <label className="label text" htmlFor="profilePic">Profile image</label>
                         <div className="profile-radio-button">
                             <label >
-                                <input type="radio" name="profileUrl" checked={formValue.profileUrl === formValue.profileArray[0]} value={formValue.profileArray[0]} onChange={changeValue} />
+                                <input type="radio" name="profilePic" checked={formValue.profilePic === formValue.profileArray[0]} value={formValue.profileArray[0]} onChange={changeValue} />
                                 <img className="profile" src={profileImages("./" + formValue.profileArray[0]).default} alt="profile" />
                             </label>
                             <label >
-                                <input type="radio" name="profileUrl" checked={formValue.profileUrl === formValue.profileArray[1]} value={formValue.profileArray[1]} onChange={changeValue} />
+                                <input type="radio" name="profilePic" checked={formValue.profilePic === formValue.profileArray[1]} value={formValue.profileArray[1]} onChange={changeValue} />
                                 <img className="profile" src={profileImages("./" + formValue.profileArray[1]).default} alt="profile" />
                             </label>
                             <label >
-                                <input type="radio" name="profileUrl" checked={formValue.profileUrl === formValue.profileArray[2]} value={formValue.profileArray[2]} onChange={changeValue} />
+                                <input type="radio" name="profilePic" checked={formValue.profilePic === formValue.profileArray[2]} value={formValue.profileArray[2]} onChange={changeValue} />
                                 <img className="profile" src={profileImages("./" + formValue.profileArray[2]).default} alt="profile" />
                             </label>
                             <label >
-                                <input type="radio" name="profileUrl" checked={formValue.profileUrl === formValue.profileArray[3]} value={formValue.profileArray[3]} onChange={changeValue} />
+                                <input type="radio" name="profilePic" checked={formValue.profilePic === formValue.profileArray[3]} value={formValue.profileArray[3]} onChange={changeValue} />
                                 <img className="profile" src={profileImages("./" + formValue.profileArray[3]).default} alt="profile" />
                             </label>
 
                         </div>
-                        <error className="error">{formValue.error.profileUrl}</error>
+                        <error className="error">{formValue.error.profilePic}</error>
                     </div>
                     <div className="row">
                         <label className="label text" htmlFor="gender">Gender</label>
@@ -247,7 +247,7 @@ const PayrollForm = (props) => {
                         <error className="error">{formValue.error.gender}</error>
                     </div>
                     <div className="row">
-                        <label className="label text" htmlFor="department">Department</label>
+                        <label className="label text" htmlFor="departments">Department</label>
                         <div>
                             {console.log(formValue)}
                             {formValue.allDepartment.map(item => (
@@ -259,7 +259,7 @@ const PayrollForm = (props) => {
                             ))}
 
                         </div>
-                        <error className="error">{formValue.error.department}</error>
+                        <error className="error">{formValue.error.departments}</error>
                     </div>
 
                     <div className="row">
@@ -305,18 +305,18 @@ const PayrollForm = (props) => {
                                 <option value="31">31</option>
                             </select>
                             <select value={formValue.month} onChange={changeValue} id="month" name="month">
-                                <option value="Jan">January</option>
-                                <option value="Feb">Febuary</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="Aug">August</option>
-                                <option value="Sept">September</option>
-                                <option value="Oct">October</option>
-                                <option value="Nov">November</option>
-                                <option value="Dec">December</option>
+                                <option value="01">January</option>
+                                <option value="02">Febuary</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
                             </select>
                             <select value={formValue.year} onChange={changeValue} id="year" name="year">
                                 <option value="2021">2021</option>

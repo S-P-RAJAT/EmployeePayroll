@@ -4,22 +4,36 @@ import AxiosService from "./AxiosService";
 export default class EmployeeService {
   baseUrl = config.baseUrl;
   addEmployee(data) {
-    return AxiosService.postService(`${this.baseUrl}employee`, data);
+    return AxiosService.postService(
+      `${this.baseUrl}employeepayrollservice/create`,
+      data
+    );
   }
 
   getAllEmployee() {
-    return AxiosService.getService(`${this.baseUrl}employee`);
+    console.log(
+      AxiosService.getService(`${this.baseUrl}employeepayrollservice`)
+    );
+    return AxiosService.getService(`${this.baseUrl}employeepayrollservice`);
   }
 
   getEmployee(id) {
-    return AxiosService.getService(`${this.baseUrl}employee/${id}`);
+    return AxiosService.getService(
+      `${this.baseUrl}employeepayrollservice/get/${id}`
+    );
   }
 
   updateEmployee(data) {
-    return AxiosService.putService(`${this.baseUrl}employee/${data.id}`, data);
+    console.log("Inside update" + data);
+    return AxiosService.putService(
+      `${this.baseUrl}employeepayrollservice/update/${data.data.employeeId}`,
+      data
+    );
   }
 
   deleteEmployee(id) {
-    return AxiosService.deleteService(`${this.baseUrl}employee/${id}`);
+    return AxiosService.deleteService(
+      `${this.baseUrl}employeepayrollservice/delete/${id}`
+    );
   }
 }

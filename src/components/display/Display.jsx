@@ -46,23 +46,23 @@ const Display = (props) => {
               <td>
                 <img
                   className="profile"
-                  src={profileImages("./" + element.profileUrl).default}
+                  src={profileImages("./" + element.profilePic).default}
                   alt="No images"
                 />
               </td>
               <td>{element.name}</td>
               <td className="gender">{element.gender}</td>
               <td>
-                {element.department &&
-                  element.department.map((dept) => (
+                {element.departments &&
+                  element.departments.map((dept) => (
                     <div className="dept-label">{dept}</div>
                   ))}
               </td>
               <td> ₹ {element.salary}</td>
               <td>{element.startDate}</td>
               <td>
-                <img onClick={() => remove(element.id)} src={deleteIcon} alt="delete" />
-                <img onClick={() => update(element.id)} src={editIcon} alt="edit" />
+                <img onClick={() => remove(element.employeeId)} src={deleteIcon} alt="delete" />
+                <img onClick={() => update(element.employeeId)} src={editIcon} alt="edit" />
               </td>
             </tr>
           ))}
