@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import './PayrollForm.scss';
 import EmployeeService from "../../services/EmployeeService";
@@ -17,7 +18,7 @@ const PayrollForm = (props) => {
         allDepartment: [
             'HR', 'Sales', 'Finance', 'Engineer', 'Others'
         ],
-        departmentValue: [],
+        department: [],
         gender: '',
         salary: '',
         day: '1',
@@ -47,7 +48,7 @@ const PayrollForm = (props) => {
         if (params.id) {
             getDataById(params.id);
         }
-    });
+    }, []);
 
     const getDataById = (id) => {
         employeeService
@@ -62,15 +63,12 @@ const PayrollForm = (props) => {
             });
     };
 
-    let _ = require('lodash');
-    formValue.id = _.uniqueId();
-
     const setData = (obj) => {
         let array = obj.startDate.split(" ");
         setForm({
             ...formValue,
             ...obj,
-            departMentValue: obj.departMent,
+            department: obj.department,
             isUpdate: true,
             day: array[0],
             month: array[1],
@@ -83,17 +81,17 @@ const PayrollForm = (props) => {
     }
 
     const onCheckChange = (name) => {
-        let index = formValue.departmentValue.indexOf(name);
+        let index = formValue.department.indexOf(name);
 
-        let checkArray = [...formValue.departmentValue]
+        let checkArray = [...formValue.department]
         if (index > -1)
             checkArray.splice(index, 1)
         else
             checkArray.push(name);
-        setForm({ ...formValue, departmentValue: checkArray });
+        setForm({ ...formValue, department: checkArray });
     }
     const getChecked = (name) => {
-        return formValue.departmentValue && formValue.departmentValue.includes(name);
+        return formValue.department && formValue.department.includes(name);
     }
 
     const handleValidations = async () => {
@@ -124,7 +122,7 @@ const PayrollForm = (props) => {
             isError = true;
         }
 
-        if (formValue.departmentValue.length < 1) {
+        if (formValue.department.length < 1) {
             error.department = 'Department is a required field'
             isError = true;
         }
@@ -154,7 +152,7 @@ const PayrollForm = (props) => {
         } else {
             let object = {
                 name: formValue.name,
-                department: formValue.departmentValue,
+                department: formValue.department,
                 gender: formValue.gender,
                 salary: formValue.salary,
                 startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
@@ -163,15 +161,31 @@ const PayrollForm = (props) => {
                 profileUrl: formValue.profileUrl,
             };
             console.log("id" + formValue.id);
-            employeeService.addEmployee(object)
-                .then((data) => {
-                    console.log("data added successfully");
-                    setDisplayMessage("data added successfully");
-                })
-                .catch((err) => {
-                    console.log("error while Adding data");
-                    setDisplayMessage("error while Adding data");
-                });
+            if (formValue.isUpdate) {
+                employeeService
+                    .updateEmployee(object)
+                    .then((data) => {
+                        alert("Data updated successfully!");
+                        console.log("data after update", data);
+                        props.history.push("");
+                    })
+                    .catch((error) => {
+                        alert("WARNING!! Error updating the data!");
+                        console.log("Error after update" + error);
+                    });
+            } else {
+                employeeService
+                    .addEmployee(object)
+                    .then((data) => {
+                        alert("Data Added successfully!!")
+                        console.log("Employee payroll added");
+                        props.history.push("");
+                    })
+                    .catch((err) => {
+                        alert("WARNING!! Error while adding the data!");
+                        console.log("error occured while adding employee");
+                    });
+            }
         }
     }
 
@@ -235,6 +249,7 @@ const PayrollForm = (props) => {
                     <div className="row">
                         <label className="label text" htmlFor="department">Department</label>
                         <div>
+                            {console.log(formValue)}
                             {formValue.allDepartment.map(item => (
                                 <span key={item}>
                                     <input className="checkbox" type="checkbox" onChange={() => onCheckChange(item)} name={item}
@@ -304,6 +319,7 @@ const PayrollForm = (props) => {
                                 <option value="Dec">December</option>
                             </select>
                             <select value={formValue.year} onChange={changeValue} id="year" name="year">
+                                <option value="2021">2021</option>
                                 <option value="2020">2020</option>
                                 <option value="2019">2019</option>
                                 <option value="2018">2018</option>
@@ -330,7 +346,6 @@ const PayrollForm = (props) => {
                         </div>
 
                     </div >
-                    {displayMessage}
                 </form >
             </div >
         </div >
