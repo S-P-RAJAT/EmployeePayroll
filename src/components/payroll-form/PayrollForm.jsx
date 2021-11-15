@@ -45,8 +45,8 @@ const PayrollForm = (props) => {
     const params = useParams();
 
     useEffect(() => {
-        if (params.employeeId) {
-            getDataById(params.employeeId);
+        if (params.id) {
+            getDataById(params.id);
         }
     }, []);
 
@@ -54,8 +54,9 @@ const PayrollForm = (props) => {
         employeeService
             .getEmployee(id)
             .then((data) => {
-                console.log("data is ", data.data);
-                let obj = data.data;
+                console.log("data is ", data.data.data);
+                let obj = data.data.data;
+                console.log(obj)
                 setData(obj);
             })
             .catch((err) => {
@@ -70,14 +71,14 @@ const PayrollForm = (props) => {
             ...obj,
             departments: obj.departments,
             isUpdate: true,
-            day: array[0],
+            day: array[2],
             month: array[1],
-            year: array[2],
+            year: array[0],
         });
     };
     const changeValue = (event) => {
         setForm({ ...formValue, [event.target.name]: event.target.value })
-        console.log(event.target.value)
+        console.log("Inside change value " + event.target.value)
     }
 
     const onCheckChange = (name) => {
@@ -145,7 +146,10 @@ const PayrollForm = (props) => {
     }
     const save = async (event) => {
         event.preventDefault();
-
+        const date = new Date(`${formValue.year} ${formValue.month} ${formValue.day}`);
+        formValue.startDate = date.toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'short', year: 'numeric'
+        });
         if (await handleValidations()) {
             console.log("error", formValue);
             return;
@@ -155,34 +159,29 @@ const PayrollForm = (props) => {
                 departments: formValue.departments,
                 gender: formValue.gender,
                 salary: formValue.salary,
-                startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
+                startDate: formValue.startDate,
                 notes: formValue.notes,
                 employeeId: formValue.employeeId,
                 profilePic: formValue.profilePic,
             };
-            console.log("id" + formValue.employeeId);
             if (formValue.isUpdate) {
                 employeeService
                     .updateEmployee(object)
                     .then((data) => {
-                        alert("Data updated successfully!");
                         console.log("data after update", data);
                         props.history.push("");
                     })
                     .catch((error) => {
-                        alert("WARNING!! Error updating the data!");
                         console.log("Error after update" + error);
                     });
             } else {
                 employeeService
                     .addEmployee(object)
                     .then((data) => {
-                        alert("Data Added successfully!!")
                         console.log("Employee payroll added");
                         props.history.push("");
                     })
                     .catch((err) => {
-                        alert("WARNING!! Error while adding the data!");
                         console.log("error occured while adding employee");
                     });
             }
@@ -249,7 +248,6 @@ const PayrollForm = (props) => {
                     <div className="row">
                         <label className="label text" htmlFor="departments">Department</label>
                         <div>
-                            {console.log(formValue)}
                             {formValue.allDepartment.map(item => (
                                 <span key={item}>
                                     <input className="checkbox" type="checkbox" onChange={() => onCheckChange(item)} name={item}

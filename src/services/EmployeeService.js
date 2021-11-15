@@ -24,9 +24,8 @@ export default class EmployeeService {
   }
 
   updateEmployee(data) {
-    console.log("Inside update" + data);
     return AxiosService.putService(
-      `${this.baseUrl}employeepayrollservice/update/${data.data.employeeId}`,
+      `${this.baseUrl}employeepayrollservice/update/${data.employeeId}`,
       data
     );
   }

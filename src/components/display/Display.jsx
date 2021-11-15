@@ -59,7 +59,11 @@ const Display = (props) => {
                   ))}
               </td>
               <td> ₹ {element.salary}</td>
-              <td>{element.startDate}</td>
+              <td>
+                {(new Date(element.startDate)).toLocaleDateString('en-GB', {
+                  day: 'numeric', month: 'short', year: 'numeric'
+                })}
+              </td>
               <td>
                 <img onClick={() => remove(element.employeeId)} src={deleteIcon} alt="delete" />
                 <img onClick={() => update(element.employeeId)} src={editIcon} alt="edit" />
