@@ -41,14 +41,16 @@
       -webkit-transition-duration: 0.4s;
       -o-transition-duration: 0.4s;
       outline: none;
-      .search-icon {
-        width: 18%;
-        height: 18%;
-      }
+    }
+    .search-icon {
+      width: 30px;
+      padding-top: 2px;
+      margin: 0px 0px -10px -45px;
     }
 
     .input-expand {
-      width: 100px;
+      width: 200px;
+      margin-left: -40%;
     }
   }
 }
